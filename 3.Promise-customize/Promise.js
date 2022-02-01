@@ -6,12 +6,16 @@ function Promise(executor) {
   const self = this;
 
   function resolve(data) {
+    // 状態がすでに更新していたかどうかを判断する
+    if (self.PromiseState !== "pending") return;
     // 状態を変更(PromiseState)
     self.PromiseState = "fulfilled";
     // 結果を設定(PromiseResult)
     self.PromiseResult = data;
   }
   function reject(data) {
+    // 状態がすでに更新していたかどうかを判断する
+    if (self.PromiseState !== "pending") return;
     // 状態を変更(PromiseState)
     self.PromiseState = "rejected";
     // 結果を設定(PromiseResult)

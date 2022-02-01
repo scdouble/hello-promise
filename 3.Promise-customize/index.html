@@ -9,10 +9,11 @@
   <body>
     <script>
       let p = new Promise((resolve, reject) => {
-        // resolve("ok");
+        resolve("ok");
+       // reject("error")
 
         //エラーをスロー
-         throw "Error"
+        //  throw "Error"
       });
       console.log(p);
       // p.then(
