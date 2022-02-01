@@ -1,0 +1,45 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PromiseでAjaxをラップする</title>
+</head>
+<body>
+
+<div>
+  <h2>PromiseでAjaxをラップする</h2>
+  <button id="btn">クリエスト送信</button>
+</div>
+
+<script>
+  const btn = document.querySelector('#btn')
+  btn.addEventListener("click", function () {
+    const p = new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest()
+      xhr.open("GET", "https://api.apiopen.top/getJoke")
+      xhr.send();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(xhr.response)
+          } else {
+            reject(xhr.status)
+          }
+        }
+      }
+    })
+    p.then(value => {
+      console.log(value);
+    }, reason => {
+      console.warn(reason)
+    })
+
+  })
+
+
+</script>
+
+</body>
+</html>
