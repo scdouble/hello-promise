@@ -1,0 +1,27 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Promise API resolve</title>
+</head>
+<body>
+<script>
+  // resolveはインスタンスのメソッドではなくて、関数オブジェクトのメソッド
+  let p1 = Promise.resolve(123)
+  // 引数がpromiseオブジェクトでなければ、成功のPromiseを返す
+  // 引数がpromiseオブジェクトであれば、引数の結果がResolveの結果に影響する
+  let p2 = Promise.resolve(new Promise((resolve, reject) => {
+    resolve("ok")
+    reject("error")
+  }))
+
+  console.log(p1);
+  console.log(p2);
+  p2.catch(reason => console.log("p2 failed"))
+
+</script>
+</body>
+</html>
+

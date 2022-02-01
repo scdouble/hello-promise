@@ -1,0 +1,28 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Promise API resolve</title>
+</head>
+<body>
+<script>
+  // rejectはインスタンスのメソッドではなくて、関数オブジェクトのメソッド
+  // 引数に関係なく必ず失敗になる。引数が失敗した値になる
+  let p1 = Promise.reject(123) //失敗
+  let p2 = Promise.reject("abc")//失敗
+  // 引数が成功のpromiseオブジェクトであっても、rejectになる.失敗の値が引数となったobject
+  let p3 = Promise.reject(new Promise((resolve, reject) => {
+    resolve("ok")
+
+  }))
+  // console.log(p1);
+  // console.log(p2);
+  console.log("p3",p3);
+  p2.catch(reason => console.log("p2 failed"))
+
+</script>
+</body>
+</html>
+

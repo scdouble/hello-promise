@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Promise API resolve</title>
+  </head>
+  <body>
+    <script>
+      let p1 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve("ok");
+        }, 1000);
+      });
+      let p2 = new Promise((resolve, reject) => resolve("Success"));
+      let p3 = new Promise((resolve, reject) => resolve("Oh Yeah"));
+
+      const result = Promise.race([p1, p2, p3]);
+      console.log(result);
+    </script>
+  </body>
+</html>
