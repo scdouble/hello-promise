@@ -1,0 +1,70 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>初めてのPromise</title>
+</head>
+<body>
+
+<div>
+  <h2>初めてのPromise</h2>
+  <button id="btn">クリック</button>
+</div>
+
+<script>
+
+  function rand(m, n) {
+    return Math.ceil(Math.random() * (n - m + 1)) + m - 1;
+  }
+
+  //dom要素を取得
+  const btn = document.querySelector('#btn')
+  // ボタンにマウスクリックイベントを設定
+  btn.addEventListener("click", function () {
+    //　promiseを使わないやり方
+    //   setTimeout(() => {
+    //
+    //     let n = rand(1, 100)
+    //     if (n <= 30) {
+    //       alert("おめでとう")
+    //     } else {
+    //       alert("残念！")
+    //     }
+    //
+    //   }, 1000)
+
+    // Promiseで実現する
+    // resolve, reject　→　共に関数
+    // 非同期の処理が成功したらResolveを実行　失敗したらRejectを実行
+
+    const p = new Promise((resolve, reject) => {
+      // Promise関数は非同期処理をラップできる
+      setTimeout(() => {
+
+        let n = rand(1, 100)
+        if (n <= 30) {
+          resolve(n) //promiseのobject(= p)の状態を成功に設定する
+        } else {
+          reject(n) //promiseのobject(= p)の状態を失敗に設定する
+        }
+      }, 1000)
+    })
+    // thenの実行。
+    // 二つのコールバック関数を受け取る。一つ目は成功した場合の処理、二つ目は失敗した場合の処理
+    p.then(
+        (value) => {//成功
+          alert("成功。当たった数字：" + value)
+        },
+        (reason) => {  //失敗
+          alert("失敗.あなたの数字：" + reason)
+
+        }
+    )
+
+  })
+</script>
+
+</body>
+</html>
