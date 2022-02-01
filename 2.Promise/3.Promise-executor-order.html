@@ -1,0 +1,28 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let p = new Promise((resolve, reject) => {
+        // Executorが同期処理の場合はresolveが先に実行してから.thenが実行される
+       // resolve("ok");
+
+        // Executorが非同期処理の場合はthenがさきに実行される
+        setTimeout(() => {
+          resolve("OK");
+        },1000);
+      });
+
+      p.then(
+        (value) => {
+          console.log(value);
+        },
+        (reason) => {}
+      );
+    </script>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let p = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve("ok");
+        }, 1000);
+      });
+
+      // thenの結果はPromise
+      p.then(
+        (value) => {
+          return new Promise((resolve, reject) => {
+            resolve("success");
+          });
+        },
+        (reason) => {
+          console.warn(reason);
+        }
+      )
+        .then((value) => console.log(value))
+        .then((value) => console.log(value)); // undefined
+    </script>
+  </body>
+</html>

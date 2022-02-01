@@ -1,0 +1,38 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let p = new Promise((resolve, reject) => {
+        resolve("OK");
+      });
+
+      // thenを実行する
+      // thenはpromiseを返す。thenが返すpromiseの状態はthenで指定されたコールバック関数の実行結果によって決まる
+      let result = p.then(
+        (value) => {
+          console.log(value);
+          // 1.throw
+          // throw 'error' // Rejectedになる
+
+          // 2.結果がpromiseオブジェクトではないもの
+          // return "abc"
+
+          // 3. 結果promiseオブジェクト
+          return new Promise((resolve, reject) => {
+            // resolve("success");
+            reject("ERROR");
+          });
+        },
+        (reason) => {
+          console.warn(reason);
+        }
+      );
+      console.log("result", result);
+    </script>
+  </body>
+</html>
