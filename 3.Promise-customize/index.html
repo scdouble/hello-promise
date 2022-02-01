@@ -10,20 +10,20 @@
     <script>
       let p = new Promise((resolve, reject) => {
         resolve("ok");
-       // reject("error")
+        // reject("error")
 
         //エラーをスロー
         //  throw "Error"
       });
       console.log(p);
-      // p.then(
-      //   (value) => {
-      //     console.log(value);
-      //   },
-      //   (reason) => {
-      //     console.log(reason);
-      //   }
-      // );
+      p.then(
+        (value) => {
+          console.log(value);
+        },
+        (reason) => {
+          console.warn(reason);
+        }
+      );
     </script>
   </body>
 </html>

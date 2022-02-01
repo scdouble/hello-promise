@@ -31,4 +31,12 @@ function Promise(executor) {
 }
 
 // thenメソッドを追加
-Promise.prototype.then = function (onResolved, onRejected) {};
+Promise.prototype.then = function (onResolved, onRejected) {
+  // then のコールバックを実行
+  if (this.PromiseState === "fulfilled") {
+    onResolved(this.PromiseResult);
+  }
+  if (this.PromiseState === "rejected") {
+    onRejected(this.PromiseResult);
+  }
+};
