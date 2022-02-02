@@ -148,8 +148,6 @@ Promise.all = function (promises) {
     let count = 0;
     let arr = [];
     for (let i = 0; i < promises.length; i++) {
-      console.log(count, promises.length, count === promises.length);
-      console.log(arr);
       promises[i].then(
         (value) => {
           count++;
@@ -158,6 +156,25 @@ Promise.all = function (promises) {
           if (count === promises.length) {
             resolve(arr);
           }
+        },
+        (reason) => {
+          reject(reason);
+        }
+      );
+    }
+  });
+};
+
+/**
+ * Promise.race
+ */
+Promise.race = function (promises) {
+  return new Promise((resolve, reject) => {
+    for (let i = 0; i < promises.length; i++) {
+      promises[i].then(
+        (value) => {
+          // 先に実行したpromiseが状態を変更する
+          resolve(value);
         },
         (reason) => {
           reject(reason);
