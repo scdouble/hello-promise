@@ -55,6 +55,18 @@ function Promise(executor) {
 // thenメソッドを追加
 Promise.prototype.then = function (onResolved, onRejected) {
   const self = this;
+  // コールバックの条件判定 コールバック関数が指定されていない時に関数を付与
+  if (typeof onRejected !== "function") {
+    onRejected = (reason) => {
+      throw reason;
+    };
+  }
+
+  if (typeof onResolved !== "function") {
+    onResolved = (value) => {
+      return value;
+    };
+  }
   return new Promise((resolve, reject) => {
     // 同じ処理の関数を切り出す
     function callback(type) {
@@ -98,4 +110,9 @@ Promise.prototype.then = function (onResolved, onRejected) {
       });
     }
   });
+};
+
+// catchメソッドを追加
+Promise.prototype.catch = function (onRejected) {
+  return this.then(undefined, onRejected);
 };
