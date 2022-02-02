@@ -2,7 +2,7 @@ function Promise(executor) {
   // 属性を追加
   this.PromiseState = "pending";
   this.PromiseResult = null;
-  this.callback = {};
+  this.callbacks = [];
   // thisの値を保存
   const self = this;
 
@@ -16,10 +16,12 @@ function Promise(executor) {
     // 結果を設定(PromiseResult)
     self.PromiseResult = data;
     // 成功したコールバックを実行
-    if (self.callback.onResolved) {
-      self.callback.onResolved(data);
-    }
-
+    // if (self.callback.onResolved) {
+    //   self.callback.onResolved(data);
+    // }
+    self.callbacks.forEach((item) => {
+      item.onResolved(data);
+    });
   }
 
   function reject(data) {
@@ -32,9 +34,13 @@ function Promise(executor) {
     // 結果を設定(PromiseResult)
     self.PromiseResult = data;
     // 失敗のコールバックを実行
-    if (self.callback.onResolved) {
-      self.callback.onRejected(data);
-    }
+    // if (self.callback.onRejected) {
+    //   self.callback.onRejected(data);
+    // }
+
+    self.callbacks.forEach((item) => {
+      item.onRejected(data);
+    });
   }
 
   try {
@@ -57,10 +63,9 @@ Promise.prototype.then = function (onResolved, onRejected) {
   }
   if (this.PromiseState === "pending") {
     //　コールバック関数を保存
-    this.callback = {
-      onResolved, onRejected
-    }
-
+    this.callbacks.push({
+      onResolved,
+      onRejected,
+    });
   }
-
 };
