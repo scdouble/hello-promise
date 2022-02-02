@@ -19,8 +19,10 @@ function Promise(executor) {
     // if (self.callback.onResolved) {
     //   self.callback.onResolved(data);
     // }
-    self.callbacks.forEach((item) => {
-      item.onResolved(data);
+    setTimeout(() => {
+      self.callbacks.forEach((item) => {
+        item.onResolved(data);
+      });
     });
   }
 
@@ -38,8 +40,10 @@ function Promise(executor) {
     //   self.callback.onRejected(data);
     // }
 
-    self.callbacks.forEach((item) => {
-      item.onRejected(data);
+    setTimeout(() => {
+      self.callbacks.forEach((item) => {
+        item.onRejected(data);
+      });
     });
   }
 
@@ -93,10 +97,14 @@ Promise.prototype.then = function (onResolved, onRejected) {
     }
     // then のコールバックを実行
     if (this.PromiseState === "fulfilled") {
-      callback(onResolved);
+      setTimeout(() => {
+        callback(onResolved);
+      });
     }
     if (this.PromiseState === "rejected") {
-      callback(onRejected);
+      setTimeout(() => {
+        callback(onRejected);
+      });
     }
     if (this.PromiseState === "pending") {
       //　コールバック関数を保存

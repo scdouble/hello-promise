@@ -77,18 +77,31 @@
       /**
        * Promise.race
        */
-      let p1 = new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve("OK");
-        }, 1000);
-        
-        
-      });
-      let p2 = Promise.reject("Success");
-      let p3 = Promise.resolve("Oh yean");
+      // let p1 = new Promise((resolve, reject) => {
+      //   setTimeout(() => {
+      //     resolve("OK");
+      //   }, 1000);
 
-      let result = Promise.race([p1, p2, p3]);
-      console.log(result);
+      // });
+      // let p2 = Promise.reject("Success");
+      // let p3 = Promise.resolve("Oh yean");
+
+      // let result = Promise.race([p1, p2, p3]);
+      // console.log(result);
+
+      /**
+       * thenの指定のCallback関数を非同期処理で実装さする
+       * */
+      let p1 = new Promise((resolve, reject) => {
+        resolve("ok");
+        console.log(111);
+      });
+
+      p1.then((value) => {
+        // console.log(value);
+        console.log(222);
+      });
+      console.log(333);
     </script>
   </body>
 </html>
