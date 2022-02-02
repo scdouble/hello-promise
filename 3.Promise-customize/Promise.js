@@ -54,6 +54,7 @@ function Promise(executor) {
 
 // thenメソッドを追加
 Promise.prototype.then = function (onResolved, onRejected) {
+  const self = this;
   return new Promise((resolve, reject) => {
     // then のコールバックを実行
     if (this.PromiseState === "fulfilled") {
@@ -84,8 +85,44 @@ Promise.prototype.then = function (onResolved, onRejected) {
     if (this.PromiseState === "pending") {
       //　コールバック関数を保存
       this.callbacks.push({
-        onResolved,
-        onRejected,
+        onResolved: function () {
+          try {
+            let result = onResolved(self.PromiseResult);
+            if (result instanceof Promise) {
+              result.then(
+                (value) => {
+                  resolve(value);
+                },
+                (reason) => {
+                  reject(reason);
+                }
+              );
+            } else {
+              resolve(result);
+            }
+          } catch (error) {
+            reject(error);
+          }
+        },
+        onRejected: function () {
+          try {
+            let result = onRejected(self.PromiseResult);
+            if (result instanceof Promise) {
+              result.then(
+                (value) => {
+                  resolve(value);
+                },
+                (reason) => {
+                  reject(reason);
+                }
+              );
+            } else {
+              resolve(result);
+            }
+          } catch (error) {
+            reject(error);
+          }
+        },
       });
     }
   });
