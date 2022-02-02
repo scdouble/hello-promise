@@ -9,9 +9,10 @@
   <body>
     <script>
       let p = new Promise((resolve, reject) => {
-        setTimeout(() => {
+           setTimeout(() => {
           resolve("ok");
-        }, 1000);
+       // reject("error");
+            }, 1000);
       });
       console.log(p);
       const result = p.then(
@@ -19,7 +20,7 @@
           console.log(value);
         },
         (reason) => {
-          throw error;
+          console.warn(reason);
         }
       );
 

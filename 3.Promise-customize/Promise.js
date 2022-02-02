@@ -56,11 +56,11 @@ function Promise(executor) {
 Promise.prototype.then = function (onResolved, onRejected) {
   const self = this;
   return new Promise((resolve, reject) => {
-    // then のコールバックを実行
-    if (this.PromiseState === "fulfilled") {
+    // 同じ処理の関数を切り出す
+    function callback(type) {
       try {
         // コールバックの結果を取得
-        let result = onResolved(this.PromiseResult);
+        let result = type(self.PromiseResult);
         if (result instanceof Promise) {
           //Promise型のオブジェクトなら
           result.then(
@@ -79,49 +79,21 @@ Promise.prototype.then = function (onResolved, onRejected) {
         reject(error);
       }
     }
+    // then のコールバックを実行
+    if (this.PromiseState === "fulfilled") {
+      callback(onResolved);
+    }
     if (this.PromiseState === "rejected") {
-      onRejected(this.PromiseResult);
+      callback(onRejected);
     }
     if (this.PromiseState === "pending") {
       //　コールバック関数を保存
       this.callbacks.push({
         onResolved: function () {
-          try {
-            let result = onResolved(self.PromiseResult);
-            if (result instanceof Promise) {
-              result.then(
-                (value) => {
-                  resolve(value);
-                },
-                (reason) => {
-                  reject(reason);
-                }
-              );
-            } else {
-              resolve(result);
-            }
-          } catch (error) {
-            reject(error);
-          }
+          callback(onResolved);
         },
         onRejected: function () {
-          try {
-            let result = onRejected(self.PromiseResult);
-            if (result instanceof Promise) {
-              result.then(
-                (value) => {
-                  resolve(value);
-                },
-                (reason) => {
-                  reject(reason);
-                }
-              );
-            } else {
-              resolve(result);
-            }
-          } catch (error) {
-            reject(error);
-          }
+          callback(onRejected);
         },
       });
     }
