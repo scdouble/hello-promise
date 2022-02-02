@@ -93,14 +93,18 @@
        * thenの指定のCallback関数を非同期処理で実装さする
        * */
       let p1 = new Promise((resolve, reject) => {
-        resolve("ok");
-        console.log(111);
+        reject("error");
       });
 
-      p1.then((value) => {
-        // console.log(value);
-        console.log(222);
-      });
+      p1.then(
+        (value) => {
+          // console.log(value);
+          console.log(222);
+        },
+        (reason) => {
+          console.log(444);
+        }
+      );
       console.log(333);
     </script>
   </body>
