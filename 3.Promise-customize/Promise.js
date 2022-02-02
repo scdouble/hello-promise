@@ -116,3 +116,21 @@ Promise.prototype.then = function (onResolved, onRejected) {
 Promise.prototype.catch = function (onRejected) {
   return this.then(undefined, onRejected);
 };
+
+// Resolveメソッドを追加
+Promise.resolve = function (value) {
+  return new Promise((resolve, reject) => {
+    if (value instanceof Promise) {
+      value.then(
+        (value) => {
+          resolve(value);
+        },
+        (reason) => {
+          reject(reason);
+        }
+      );
+    } else {
+      resolve(value);
+    }
+  });
+};
