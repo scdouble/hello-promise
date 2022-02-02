@@ -52,14 +52,27 @@
       //     console.warn(reason);
       //   });
 
-      const p = Promise.reject("OK");
-      const p2 = Promise.reject(
-        new Promise((resolve, reject) => {
-          resolve("fail");
-        })
-      );
-      console.log(p);
-      console.log(p2);
+      // Promise.Reject
+      // const p = Promise.reject("OK");
+      // const p2 = Promise.reject(
+      //   new Promise((resolve, reject) => {
+      //     resolve("fail");
+      //   })
+      // );
+      // console.log(p);
+      // console.log(p2);
+
+      /**
+       * Promise.all
+       */
+      let p1 = new Promise((resolve, reject) => {
+        resolve("OK");
+      });
+      let p2 = Promise.resolve("Success");
+      let p3 = Promise.resolve("Oh yean");
+
+      let result = Promise.all([p1, p2, p3]);
+      console.log(result);
     </script>
   </body>
 </html>

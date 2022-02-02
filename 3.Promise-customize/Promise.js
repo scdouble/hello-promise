@@ -135,10 +135,34 @@ Promise.resolve = function (value) {
   });
 };
 
-
 // Promise.reject
 Promise.reject = function (reason) {
   return new Promise((resolve, reject) => {
-    reject(reason)
+    reject(reason);
   });
-}
+};
+
+// Promise.all
+Promise.all = function (promises) {
+  return new Promise((resolve, reject) => {
+    let count = 0;
+    let arr = [];
+    for (let i = 0; i < promises.length; i++) {
+      console.log(count, promises.length, count === promises.length);
+      console.log(arr);
+      promises[i].then(
+        (value) => {
+          count++;
+          arr[i] = value;
+          // 全部が成功した時のみ実行
+          if (count === promises.length) {
+            resolve(arr);
+          }
+        },
+        (reason) => {
+          reject(reason);
+        }
+      );
+    }
+  });
+};
